@@ -53,7 +53,7 @@ const Index: React.FC = () => {
             <Globe2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             <div>
               <div className="text-foreground font-semibold text-xs sm:text-sm tracking-wide">AI Sector Intelligence Atlas</div>
-              <div className="text-muted-foreground text-[9px] sm:text-[10px] uppercase tracking-widest">Global Systems Monitor</div>
+              
             </div>
           </div>
 
@@ -138,33 +138,33 @@ const Index: React.FC = () => {
         <SectorGrid onSectorClick={(id) => setCurrentView(id)} />
       </div>
 
-      {currentConfig.sections.regions && (
-        <div id="regions" className="scroll-mt-24">
+      {currentConfig.sections.regions &&
+      <div id="regions" className="scroll-mt-24">
           <RegionalFilter />
         </div>
-      )}
+      }
 
-      {currentConfig.sections.quadrant && (
-        <div id="opportunities" className="scroll-mt-24">
+      {currentConfig.sections.quadrant &&
+      <div id="opportunities" className="scroll-mt-24">
           <QuadrantMatrix onSectorClick={(id) => setCurrentView(id)} />
         </div>
-      )}
+      }
 
-      {currentConfig.sections.heatmap && (
-        <div id={currentConfig.sections.quadrant ? undefined : 'opportunities'} className="scroll-mt-24">
+      {currentConfig.sections.heatmap &&
+      <div id={currentConfig.sections.quadrant ? undefined : 'opportunities'} className="scroll-mt-24">
           <OpportunityHeatmap onSectorClick={(id) => setCurrentView(id)} />
         </div>
-      )}
+      }
 
-      {currentConfig.sections.risks && (
-        <div id="risks" className="scroll-mt-24">
+      {currentConfig.sections.risks &&
+      <div id="risks" className="scroll-mt-24">
           <RiskGapIndex />
         </div>
-      )}
+      }
 
       <FooterSection onMethodology={() => setCurrentView('methodology')} />
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
