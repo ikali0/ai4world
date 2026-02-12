@@ -36,7 +36,7 @@ const MethodologyPage: React.FC<MethodologyPageProps> = ({ onBack }) => {
               <BarChart3 className="w-6 h-6 text-sector-governance" />
               <h2 className="text-2xl font-bold text-foreground">Data Sources</h2>
             </div>
-            <div className="space-y-3 text-secondary-foreground">
+            <div className="space-y-3 text-muted-foreground">
               <p>• World Bank Development Indicators</p>
               <p>• OECD Digital Economy Outlook</p>
               <p>• UNESCO Institute for Statistics</p>
@@ -56,7 +56,7 @@ const MethodologyPage: React.FC<MethodologyPageProps> = ({ onBack }) => {
               <div>
                 <h3 className="text-lg font-semibold text-foreground mb-2">Stability Score (0-100)</h3>
                 <p className="text-muted-foreground text-sm mb-2">Weighted composite index measuring:</p>
-                <ul className="text-sm space-y-1 ml-4 text-secondary-foreground">
+                <ul className="text-muted-foreground text-sm space-y-1 ml-4">
                   <li>• Infrastructure readiness (30%)</li>
                   <li>• AI deployment maturity (35%)</li>
                   <li>• Policy and regulatory framework (20%)</li>
@@ -67,16 +67,16 @@ const MethodologyPage: React.FC<MethodologyPageProps> = ({ onBack }) => {
                 <h3 className="text-lg font-semibold text-foreground mb-2">AI Maturity Levels</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {[
-                  { level: 'Advanced (75-100)', color: 'text-status-success', desc: 'Widespread deployment, strong infrastructure' },
-                  { level: 'Moderate (50-74)', color: 'text-primary', desc: 'Growing adoption, adequate infrastructure' },
-                  { level: 'Early (25-49)', color: 'text-status-warning', desc: 'Pilot programs, developing infrastructure' },
-                  { level: 'Nascent (0-24)', color: 'text-destructive', desc: 'Minimal deployment, limited infrastructure' }].
-                  map((item) =>
-                  <div key={item.level} className="p-3 bg-secondary/50 rounded">
+                    { level: 'Advanced (75-100)', color: 'text-status-success', desc: 'Widespread deployment, strong infrastructure' },
+                    { level: 'Moderate (50-74)', color: 'text-primary', desc: 'Growing adoption, adequate infrastructure' },
+                    { level: 'Early (25-49)', color: 'text-status-warning', desc: 'Pilot programs, developing infrastructure' },
+                    { level: 'Nascent (0-24)', color: 'text-destructive', desc: 'Minimal deployment, limited infrastructure' },
+                  ].map((item) => (
+                    <div key={item.level} className="p-3 bg-secondary/50 rounded">
                       <div className={`font-semibold ${item.color} text-sm`}>{item.level}</div>
                       <div className="text-xs text-muted-foreground">{item.desc}</div>
                     </div>
-                  )}
+                  ))}
                 </div>
               </div>
             </div>
@@ -107,8 +107,8 @@ const MethodologyPage: React.FC<MethodologyPageProps> = ({ onBack }) => {
           </Card>
         </div>
       </div>
-    </div>);
-
+    </div>
+  );
 };
 
 export default MethodologyPage;
