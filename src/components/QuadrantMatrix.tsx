@@ -1,28 +1,24 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Lightbulb } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useSectors, useSectorMetrics, aggregateSectorMetrics } from '@/hooks/use-dashboard-data';
 
-const SECTOR_COLORS: Record<string, string> = {
-  'Healthcare': 'hsl(192, 55%, 48%)',
-  'Education': 'hsl(260, 45%, 55%)',
-  'Energy & Climate': 'hsl(25, 65%, 50%)',
-  'Agriculture': 'hsl(155, 45%, 42%)',
-  'Labor & Economy': 'hsl(40, 55%, 48%)',
-  'Governance': 'hsl(225, 50%, 55%)',
-};
+interface QuadrantItem {
+  id: string;
+  name: string;
+  need: number;
+  capital: number;
+  color: string;
+}
 
-// Map sector names to route IDs
-const SECTOR_ROUTE_IDS: Record<string, string> = {
-  'Healthcare': 'healthcare',
-  'Education': 'education',
-  'Energy & Climate': 'energy',
-  'Agriculture': 'agriculture',
-  'Labor & Economy': 'labor',
-  'Governance': 'governance',
-};
+const QUADRANT_DATA: QuadrantItem[] = [
+  { id: 'healthcare', name: 'Healthcare', need: 78, capital: 65, color: 'hsl(192, 55%, 48%)' },
+  { id: 'education', name: 'Education', need: 88, capital: 35, color: 'hsl(260, 45%, 55%)' },
+  { id: 'energy', name: 'Energy', need: 85, capital: 72, color: 'hsl(25, 65%, 50%)' },
+  { id: 'agriculture', name: 'Agriculture', need: 91, capital: 28, color: 'hsl(155, 45%, 42%)' },
+  { id: 'labor', name: 'Labor', need: 72, capital: 48, color: 'hsl(40, 55%, 48%)' },
+  { id: 'governance', name: 'Governance', need: 94, capital: 22, color: 'hsl(225, 50%, 55%)' },
+];
 
 interface QuadrantMatrixProps {
   onSectorClick: (id: string) => void;
@@ -30,33 +26,6 @@ interface QuadrantMatrixProps {
 
 const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
   const [hovered, setHovered] = useState<string | null>(null);
-  const { data: sectors, isLoading: loadingSectors } = useSectors();
-  const { data: metrics, isLoading: loadingMetrics } = useSectorMetrics();
-
-  const quadrantData = useMemo(() => {
-    if (!sectors || !metrics) return [];
-    return sectors.map((s) => {
-      const agg = aggregateSectorMetrics(metrics, s.id);
-      return {
-        id: SECTOR_ROUTE_IDS[s.name] ?? s.id,
-        name: s.name,
-        need: agg?.unmetNeedIndex ?? 50,
-        capital: agg ? Math.min(Math.round(agg.capitalInflow / 1e9 / 0.5), 100) : 50, // normalize to 0-100 scale
-        color: SECTOR_COLORS[s.name] ?? 'hsl(200, 40%, 50%)',
-      };
-    });
-  }, [sectors, metrics]);
-
-  if (loadingSectors || loadingMetrics) {
-    return (
-      <section className="relative z-10 px-4 py-12 md:py-16">
-        <div className="max-w-7xl mx-auto">
-          <Skeleton className="h-10 w-64 mx-auto mb-8" />
-          <Skeleton className="h-96 w-full max-w-2xl mx-auto" />
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="relative z-10 px-4 py-12 md:py-16">
@@ -72,6 +41,7 @@ const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
         </div>
 
         <Card className="p-4 md:p-6 bg-card/80 backdrop-blur-md border-border/50">
+          {/* Quadrant chart */}
           <div className="relative w-full max-w-2xl mx-auto" style={{ paddingBottom: '100%' }}>
             <div className="absolute inset-0">
               {/* Background quadrant zones */}
@@ -84,7 +54,7 @@ const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
               <div className="absolute left-0 top-0 bottom-0 w-px bg-border/40" />
               <div className="absolute bottom-0 left-0 right-0 h-px bg-border/40" />
 
-              {/* Quadrant labels */}
+              {/* Quadrant labels — hidden on very small screens */}
               <span className="hidden sm:block absolute top-2 left-2 text-[8px] md:text-[9px] text-primary/60 uppercase tracking-widest leading-tight">
                 High Need<br />Low Capital
               </span>
@@ -107,7 +77,7 @@ const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
               </div>
 
               {/* Data points */}
-              {quadrantData.map((item) => {
+              {QUADRANT_DATA.map((item) => {
                 const x = (item.capital / 100) * 100;
                 const y = (1 - item.need / 100) * 100;
                 const isHovered = hovered === item.id;
@@ -134,6 +104,7 @@ const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
                         boxShadow: isHovered ? `0 0 18px ${item.color}50, 0 0 6px ${item.color}30` : `0 0 8px ${item.color}20`,
                       }}
                     />
+                    {/* Label — always visible on mobile, hover on desktop */}
                     <div
                       className={`absolute top-full mt-1 left-1/2 -translate-x-1/2 bg-card/95 backdrop-blur border border-border/60 rounded-md px-2 py-1 whitespace-nowrap z-20 transition-opacity duration-150 ${
                         isHovered ? 'opacity-100' : 'opacity-0 sm:opacity-0 pointer-events-none'
@@ -150,13 +121,16 @@ const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
 
           {/* Legend */}
           <div className="flex flex-wrap justify-center gap-3 md:gap-4 mt-8 md:mt-10">
-            {quadrantData.map((item) => (
+            {QUADRANT_DATA.map((item) => (
               <button
                 key={item.id}
                 className="flex items-center gap-1.5 text-[10px] md:text-xs text-muted-foreground hover:text-foreground transition-colors"
                 onClick={() => onSectorClick(item.id)}
               >
-                <div className="w-2.5 h-2.5 rounded-full ring-1 ring-border/30" style={{ backgroundColor: item.color }} />
+                <div
+                  className="w-2.5 h-2.5 rounded-full ring-1 ring-border/30"
+                  style={{ backgroundColor: item.color }}
+                />
                 {item.name}
               </button>
             ))}

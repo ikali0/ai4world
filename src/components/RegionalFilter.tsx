@@ -5,65 +5,28 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Globe2, X } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useRegions, useSectorMetrics } from '@/hooks/use-dashboard-data';
+
+interface Region {
+  id: string;
+  name: string;
+  aiAdoption: number;
+  capitalInflow: string;
+  regulatoryMaturity: number;
+  workforceReadiness: number;
+  sectorStrengths: string[];
+}
+
+const REGIONS: Region[] = [
+  { id: 'north-america', name: 'North America', aiAdoption: 78, capitalInflow: '$68.4B', regulatoryMaturity: 72, workforceReadiness: 81, sectorStrengths: ['Healthcare', 'Finance'] },
+  { id: 'europe', name: 'Europe', aiAdoption: 65, capitalInflow: '$42.1B', regulatoryMaturity: 84, workforceReadiness: 69, sectorStrengths: ['Governance', 'Energy'] },
+  { id: 'asia-pacific', name: 'Asia-Pacific', aiAdoption: 72, capitalInflow: '$51.8B', regulatoryMaturity: 55, workforceReadiness: 74, sectorStrengths: ['Education', 'Manufacturing'] },
+  { id: 'middle-east', name: 'Middle East & Africa', aiAdoption: 34, capitalInflow: '$12.3B', regulatoryMaturity: 38, workforceReadiness: 41, sectorStrengths: ['Energy', 'Agriculture'] },
+  { id: 'latin-america', name: 'Latin America', aiAdoption: 42, capitalInflow: '$9.6B', regulatoryMaturity: 44, workforceReadiness: 48, sectorStrengths: ['Agriculture', 'Labor'] },
+];
 
 const RegionalFilter: React.FC = () => {
   const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
-  const { data: regions, isLoading } = useRegions();
-  const { data: metrics } = useSectorMetrics();
-
-  // Compute per-region aggregates from sector_metrics
-  const regionStats = React.useMemo(() => {
-    if (!regions || !metrics) return {};
-    const map: Record<string, { aiAdoption: number; capitalInflow: number; workforceReadiness: number; sectorStrengths: string[] }> = {};
-    for (const region of regions) {
-      const rm = metrics.filter((m) => m.region_id === region.id);
-      if (rm.length === 0) {
-        map[region.id] = { aiAdoption: 0, capitalInflow: 0, workforceReadiness: 0, sectorStrengths: [] };
-        continue;
-      }
-      const avg = (key: string) => {
-        const vals = rm.map((m) => (m as any)[key] as number | null).filter((v): v is number => v != null);
-        return vals.length ? Math.round(vals.reduce((a, b) => a + b, 0) / vals.length) : 0;
-      };
-      const totalCapital = rm.reduce((s, m) => s + (m.capital_inflow_usd ?? 0), 0);
-      // Top 2 sectors by adoption
-      const sorted = [...rm].sort((a, b) => (b.ai_adoption_rate ?? 0) - (a.ai_adoption_rate ?? 0));
-      const strengths = sorted.slice(0, 2).map((m) => (m.sectors as any)?.name ?? 'Unknown');
-      map[region.id] = {
-        aiAdoption: avg('ai_adoption_rate'),
-        capitalInflow: totalCapital,
-        workforceReadiness: avg('workforce_readiness'),
-        sectorStrengths: strengths,
-      };
-    }
-    return map;
-  }, [regions, metrics]);
-
-  const formatCapital = (v: number) => {
-    if (v >= 1e9) return `$${(v / 1e9).toFixed(1)}B`;
-    if (v >= 1e6) return `$${(v / 1e6).toFixed(0)}M`;
-    return `$${v}`;
-  };
-
-  if (isLoading) {
-    return (
-      <section className="relative z-10 px-4 py-16">
-        <div className="max-w-7xl mx-auto">
-          <Skeleton className="h-10 w-64 mx-auto mb-8" />
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
-            {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-28" />)}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!regions || regions.length === 0) return null;
-
-  const active = regions.find((r) => r.id === selectedRegion);
-  const activeStats = active ? regionStats[active.id] : null;
+  const active = REGIONS.find(r => r.id === selectedRegion);
 
   return (
     <section className="relative z-10 px-4 py-16">
@@ -78,7 +41,7 @@ const RegionalFilter: React.FC = () => {
 
         {/* Region buttons */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
-          {regions.map((region) => (
+          {REGIONS.map((region) => (
             <Button
               key={region.id}
               variant={selectedRegion === region.id ? 'default' : 'outline'}
@@ -98,7 +61,7 @@ const RegionalFilter: React.FC = () => {
 
         {/* Region detail */}
         <AnimatePresence mode="wait">
-          {active && activeStats && (
+          {active && (
             <motion.div
               key={active.id}
               initial={{ opacity: 0, y: 15 }}
@@ -109,16 +72,14 @@ const RegionalFilter: React.FC = () => {
               <Card className="p-8 bg-card/60 backdrop-blur-md border-border/50">
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-2xl font-bold text-foreground">{active.name}</h3>
-                  <Badge className="bg-primary/10 text-primary border-primary/20 text-xs">
-                    {formatCapital(activeStats.capitalInflow)} Capital Inflow
-                  </Badge>
+                  <Badge className="bg-primary/10 text-primary border-primary/20 text-xs">{active.capitalInflow} Capital Inflow</Badge>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                   {[
-                    { label: 'AI Adoption Rate', value: activeStats.aiAdoption },
-                    { label: 'Regulatory Maturity', value: active.regulatory_index ?? 0 },
-                    { label: 'Workforce Readiness', value: activeStats.workforceReadiness },
+                    { label: 'AI Adoption Rate', value: active.aiAdoption },
+                    { label: 'Regulatory Maturity', value: active.regulatoryMaturity },
+                    { label: 'Workforce Readiness', value: active.workforceReadiness },
                   ].map((metric) => (
                     <div key={metric.label}>
                       <div className="flex justify-between mb-2">
@@ -133,7 +94,7 @@ const RegionalFilter: React.FC = () => {
                 <div>
                   <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Leading Sectors</span>
                   <div className="flex gap-2 mt-2">
-                    {activeStats.sectorStrengths.map((s) => (
+                    {active.sectorStrengths.map(s => (
                       <Badge key={s} variant="secondary" className="text-xs">{s}</Badge>
                     ))}
                   </div>
@@ -146,22 +107,19 @@ const RegionalFilter: React.FC = () => {
         {/* Global overview when no region selected */}
         {!selectedRegion && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-              {regions.map((region) => {
-                const stats = regionStats[region.id];
-                return (
-                  <Card
-                    key={region.id}
-                    className="p-4 bg-card/40 backdrop-blur-md border-border/30 cursor-pointer hover:border-primary/30 transition-all"
-                    onClick={() => setSelectedRegion(region.id)}
-                  >
-                    <div className="text-sm font-semibold text-foreground mb-2">{region.name}</div>
-                    <div className="text-2xl font-bold text-primary mb-1">{stats?.aiAdoption ?? 0}%</div>
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-widest">AI Adoption</div>
-                    <Progress value={stats?.aiAdoption ?? 0} className="h-1 bg-secondary mt-2" />
-                  </Card>
-                );
-              })}
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+              {REGIONS.map((region) => (
+                <Card
+                  key={region.id}
+                  className="p-4 bg-card/40 backdrop-blur-md border-border/30 cursor-pointer hover:border-primary/30 transition-all"
+                  onClick={() => setSelectedRegion(region.id)}
+                >
+                  <div className="text-sm font-semibold text-foreground mb-2">{region.name}</div>
+                  <div className="text-2xl font-bold text-primary mb-1">{region.aiAdoption}%</div>
+                  <div className="text-[10px] text-muted-foreground uppercase tracking-widest">AI Adoption</div>
+                  <Progress value={region.aiAdoption} className="h-1 bg-secondary mt-2" />
+                </Card>
+              ))}
             </div>
           </motion.div>
         )}

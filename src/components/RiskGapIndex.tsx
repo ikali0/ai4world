@@ -1,39 +1,32 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { AlertTriangle, TrendingDown, ShieldAlert } from 'lucide-react';
-import { Skeleton } from '@/components/ui/skeleton';
-import { useSectors, useSectorMetrics, aggregateSectorMetrics } from '@/hooks/use-dashboard-data';
 
-const SECTOR_RISK_FACTORS: Record<string, string> = {
-  'Governance': 'Policy framework gaps in 120+ nations',
-  'Energy & Climate': 'Grid modernization lag vs climate timeline',
-  'Agriculture': 'Smallholder access below 5% globally',
-  'Labor & Economy': 'Reskilling programs reaching 12% of displaced',
-  'Education': 'Digital equity improving but uneven',
-  'Healthcare': 'Rural diagnostics remain under-served'
-};
+interface RiskIndicator {
+  sector: string;
+  risk: 'Critical' | 'Elevated' | 'Moderate' | 'Low';
+  score: number;
+  trend: 'Worsening' | 'Stable' | 'Improving';
+  factor: string;
+}
 
-const getRiskLabel = (score: number): 'Critical' | 'Elevated' | 'Moderate' | 'Low' => {
-  if (score < 30) return 'Critical';
-  if (score < 50) return 'Elevated';
-  if (score < 70) return 'Moderate';
-  return 'Low';
-};
-
-const getTrend = (growthRate: number): 'Worsening' | 'Stable' | 'Improving' => {
-  if (growthRate < 0) return 'Worsening';
-  if (growthRate < 5) return 'Stable';
-  return 'Improving';
-};
+const RISK_DATA: RiskIndicator[] = [
+  { sector: 'Governance', risk: 'Critical', score: 18, trend: 'Worsening', factor: 'Policy framework gaps in 120+ nations' },
+  { sector: 'Energy & Climate', risk: 'Critical', score: 24, trend: 'Stable', factor: 'Grid modernization lag vs climate timeline' },
+  { sector: 'Agriculture', risk: 'Elevated', score: 38, trend: 'Improving', factor: 'Smallholder access below 5% globally' },
+  { sector: 'Labor & Economy', risk: 'Elevated', score: 42, trend: 'Worsening', factor: 'Reskilling programs reaching 12% of displaced' },
+  { sector: 'Education', risk: 'Moderate', score: 51, trend: 'Improving', factor: 'Digital equity improving but uneven' },
+  { sector: 'Healthcare', risk: 'Moderate', score: 58, trend: 'Improving', factor: 'Rural diagnostics remain under-served' },
+];
 
 const getRiskStyle = (risk: string) => {
   switch (risk) {
-    case 'Critical':return 'bg-destructive/15 text-destructive border-destructive/20';
-    case 'Elevated':return 'bg-sector-energy/15 text-sector-energy border-sector-energy/20';
-    case 'Moderate':return 'bg-status-warning/15 text-status-warning border-status-warning/20';
-    default:return 'bg-status-success/15 text-status-success border-status-success/20';
+    case 'Critical': return 'bg-destructive/15 text-destructive border-destructive/20';
+    case 'Elevated': return 'bg-sector-energy/15 text-sector-energy border-sector-energy/20';
+    case 'Moderate': return 'bg-status-warning/15 text-status-warning border-status-warning/20';
+    default: return 'bg-status-success/15 text-status-success border-status-success/20';
   }
 };
 
@@ -44,43 +37,6 @@ const getTrendIcon = (trend: string) => {
 };
 
 const RiskGapIndex: React.FC = () => {
-  const { data: sectors, isLoading: ls } = useSectors();
-  const { data: metrics, isLoading: lm } = useSectorMetrics();
-
-  const riskData = useMemo(() => {
-    if (!sectors || !metrics) return [];
-    return sectors.map((s) => {
-      const agg = aggregateSectorMetrics(metrics, s.id);
-      // Resilience = stability (maturity) score
-      const resilience = agg?.stabilityScore ?? 50;
-      // Use baseline_system_risk from sectors table as a weight
-      const adjustedScore = Math.round(resilience * (1 - (s.baseline_system_risk ?? 50) / 200));
-      // Avg capital growth rate across regions for trend
-      const regionMetrics = metrics.filter((m) => m.sector_id === s.id);
-      const avgGrowth = regionMetrics.length ?
-      regionMetrics.reduce((sum, m) => sum + (m.capital_growth_rate ?? 0), 0) / regionMetrics.length :
-      0;
-      return {
-        sector: s.name,
-        risk: getRiskLabel(adjustedScore),
-        score: adjustedScore,
-        trend: getTrend(avgGrowth),
-        factor: SECTOR_RISK_FACTORS[s.name] ?? 'Systemic vulnerabilities detected'
-      };
-    }).sort((a, b) => a.score - b.score);
-  }, [sectors, metrics]);
-
-  if (ls || lm) {
-    return (
-      <section className="relative z-10 px-4 py-16">
-        <div className="max-w-7xl mx-auto">
-          <Skeleton className="h-10 w-64 mx-auto mb-8" />
-          <Skeleton className="h-64 w-full" />
-        </div>
-      </section>);
-
-  }
-
   return (
     <section className="relative z-10 px-4 py-16">
       <div className="max-w-7xl mx-auto">
@@ -94,8 +50,8 @@ const RiskGapIndex: React.FC = () => {
 
         <Card className="p-6 bg-card/60 backdrop-blur-md border-border/50">
           <div className="space-y-3">
-            {riskData.map((item) =>
-            <div key={item.sector} className="p-4 bg-secondary/30 rounded-lg flex items-center justify-center gap-[14px]">
+            {RISK_DATA.map((item) => (
+              <div key={item.sector} className="flex items-center gap-4 p-4 bg-secondary/30 rounded-lg">
                 <AlertTriangle className={`w-4 h-4 shrink-0 ${item.risk === 'Critical' ? 'text-destructive' : item.risk === 'Elevated' ? 'text-sector-energy' : 'text-status-warning'}`} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
@@ -115,12 +71,12 @@ const RiskGapIndex: React.FC = () => {
                   <Progress value={item.score} className="h-1 bg-secondary" />
                 </div>
               </div>
-            )}
+            ))}
           </div>
         </Card>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default RiskGapIndex;
