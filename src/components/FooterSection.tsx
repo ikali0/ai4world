@@ -33,24 +33,24 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
             <span className="text-sm font-semibold text-foreground">AI Sector Intelligence Atlas</span>
           </div>
           <div className="flex items-center justify-center gap-6 mb-4">
-            <button onClick={onMethodology} className="text-muted-foreground hover:text-foreground text-xs transition-colors uppercase tracking-widest">Methodology</button>
+            <button onClick={onMethodology} className="text-xs transition-colors uppercase tracking-widest text-destructive">Methodology</button>
             <span className="text-border/50">•</span>
-            <button className="text-muted-foreground hover:text-foreground text-xs transition-colors uppercase tracking-widest">Data Sources</button>
+            <button className="text-xs transition-colors uppercase tracking-widest text-destructive-foreground">Data Sources</button>
             <span className="text-border/50">•</span>
-            <button className="text-muted-foreground hover:text-foreground text-xs transition-colors uppercase tracking-widest">API Access</button>
+            <button className="text-xs transition-colors uppercase tracking-widest text-sector-education">API Access</button>
             <span className="text-border/50">•</span>
-            <button className="text-muted-foreground hover:text-foreground text-xs transition-colors uppercase tracking-widest">Contact</button>
+            <button className="text-xs transition-colors uppercase tracking-widest text-status-warning">Contact</button>
           </div>
           <p className="text-muted-foreground/50 text-xs">
             Data updated every 24 hours • Last sync: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
           </p>
-          <p className="text-muted-foreground/30 text-xs mt-2">
+          <p className="text-xs mt-2 text-primary">
             © 2025 AI Sector Intelligence Atlas • Global Intelligence Platform
           </p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
+
 };
 
 export default FooterSection;
