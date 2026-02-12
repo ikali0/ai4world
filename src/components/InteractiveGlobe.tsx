@@ -14,13 +14,13 @@ interface InteractiveGlobeProps {
 }
 
 const GLOBE_SECTORS: GlobeSector[] = [
-{ id: 'healthcare', name: 'Healthcare', angle: 0, score: 62, color: 'hsl(192, 55%, 48%)' },
-{ id: 'education', name: 'Education', angle: 60, score: 58, color: 'hsl(260, 45%, 55%)' },
-{ id: 'energy', name: 'Energy', angle: 120, score: 48, color: 'hsl(25, 65%, 50%)' },
-{ id: 'agriculture', name: 'Agriculture', angle: 180, score: 54, color: 'hsl(155, 45%, 42%)' },
-{ id: 'labor', name: 'Labor', angle: 240, score: 51, color: 'hsl(40, 55%, 48%)' },
-{ id: 'governance', name: 'Governance', angle: 300, score: 44, color: 'hsl(225, 50%, 55%)' }];
-
+  { id: 'healthcare', name: 'Healthcare', angle: 0, score: 62, color: 'hsl(192, 55%, 48%)' },
+  { id: 'education', name: 'Education', angle: 60, score: 58, color: 'hsl(260, 45%, 55%)' },
+  { id: 'energy', name: 'Energy', angle: 120, score: 48, color: 'hsl(25, 65%, 50%)' },
+  { id: 'agriculture', name: 'Agriculture', angle: 180, score: 54, color: 'hsl(155, 45%, 42%)' },
+  { id: 'labor', name: 'Labor', angle: 240, score: 51, color: 'hsl(40, 55%, 48%)' },
+  { id: 'governance', name: 'Governance', angle: 300, score: 44, color: 'hsl(225, 50%, 55%)' },
+];
 
 const getScoreColor = (score: number) => {
   if (score >= 60) return '#4ade80';
@@ -39,7 +39,7 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
       {/* Subtle outer glow */}
       <div className="absolute inset-8 rounded-full bg-gradient-to-br from-primary/5 via-transparent to-primary/3 blur-2xl" />
 
-      <svg viewBox="0 0 400 400" className="w-full h-full relative z-10 text-card">
+      <svg viewBox="0 0 400 400" className="w-full h-full relative z-10">
         <defs>
           <radialGradient id="globe-gradient" cx="40%" cy="35%" r="60%">
             <stop offset="0%" stopColor="hsl(192, 55%, 48%)" stopOpacity="0.08" />
@@ -60,37 +60,37 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
         <circle cx={cx} cy={cy} r={r} fill="url(#globe-gradient)" stroke="hsl(192, 55%, 48%)" strokeOpacity="0.15" strokeWidth="1" />
 
         {/* Latitude lines */}
-        {[-0.5, 0, 0.5].map((offset, i) =>
-        <ellipse
-          key={`lat-${i}`}
-          cx={cx}
-          cy={cy + offset * r * 0.8}
-          rx={r * Math.cos(Math.asin(Math.abs(offset) * 0.8))}
-          ry={r * 0.12 * (1 - Math.abs(offset) * 0.5)}
-          fill="none"
-          stroke="hsl(215, 15%, 30%)"
-          strokeOpacity="0.15"
-          strokeWidth="0.5"
-          strokeDasharray="3 5" />
-
-        )}
+        {[-0.5, 0, 0.5].map((offset, i) => (
+          <ellipse
+            key={`lat-${i}`}
+            cx={cx}
+            cy={cy + offset * r * 0.8}
+            rx={r * Math.cos(Math.asin(Math.abs(offset) * 0.8))}
+            ry={r * 0.12 * (1 - Math.abs(offset) * 0.5)}
+            fill="none"
+            stroke="hsl(215, 15%, 30%)"
+            strokeOpacity="0.15"
+            strokeWidth="0.5"
+            strokeDasharray="3 5"
+          />
+        ))}
 
         {/* Longitude lines */}
-        {[0, 45, 90, 135].map((rot, i) =>
-        <ellipse
-          key={`lon-${i}`}
-          cx={cx}
-          cy={cy}
-          rx={r * Math.cos(rot * Math.PI / 180) || 1}
-          ry={r}
-          fill="none"
-          stroke="hsl(215, 15%, 30%)"
-          strokeOpacity="0.1"
-          strokeWidth="0.5"
-          strokeDasharray="3 5"
-          transform={`rotate(${rot} ${cx} ${cy})`} />
-
-        )}
+        {[0, 45, 90, 135].map((rot, i) => (
+          <ellipse
+            key={`lon-${i}`}
+            cx={cx}
+            cy={cy}
+            rx={r * Math.cos((rot * Math.PI) / 180) || 1}
+            ry={r}
+            fill="none"
+            stroke="hsl(215, 15%, 30%)"
+            strokeOpacity="0.1"
+            strokeWidth="0.5"
+            strokeDasharray="3 5"
+            transform={`rotate(${rot} ${cx} ${cy})`}
+          />
+        ))}
 
         {/* Connection lines */}
         {GLOBE_SECTORS.map((sector, i) => {
@@ -106,9 +106,9 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
               stroke="hsl(215, 15%, 30%)"
               strokeOpacity="0.12"
               strokeWidth="0.5"
-              strokeDasharray="2 4" />);
-
-
+              strokeDasharray="2 4"
+            />
+          );
         })}
 
         {/* Sector nodes */}
@@ -128,8 +128,8 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
               className="cursor-pointer"
               onMouseEnter={() => setHoveredSector(sector.id)}
               onMouseLeave={() => setHoveredSector(null)}
-              onClick={() => onSectorClick(sector.id)}>
-
+              onClick={() => onSectorClick(sector.id)}
+            >
               {/* Subtle pulse */}
               <circle cx={x} cy={y} r={isHovered ? 18 : 13} fill={sector.color} fillOpacity={isHovered ? 0.1 : 0.04}>
                 <animate attributeName="r" values={isHovered ? "16;20;16" : "12;15;12"} dur="4s" repeatCount="indefinite" />
@@ -144,14 +144,14 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
                 stroke={sector.color}
                 strokeWidth={isHovered ? 2 : 1}
                 filter="url(#glow-soft)"
-                style={{ transition: 'all 0.3s ease' }} />
+                style={{ transition: 'all 0.3s ease' }}
+              />
 
-
-              {isHovered &&
-              <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="6" fontWeight="600">
+              {isHovered && (
+                <text x={x} y={y + 1} textAnchor="middle" dominantBaseline="middle" fill="white" fontSize="6" fontWeight="600">
                   {sector.score}
                 </text>
-              }
+              )}
 
               {/* Label */}
               <text
@@ -161,8 +161,8 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
                 fill={isHovered ? 'hsl(210, 20%, 88%)' : 'hsl(215, 15%, 50%)'}
                 fontSize={isHovered ? "10" : "9"}
                 fontWeight={isHovered ? "600" : "400"}
-                style={{ transition: 'all 0.2s ease' }}>
-
+                style={{ transition: 'all 0.2s ease' }}
+              >
                 {sector.name}
               </text>
 
@@ -173,12 +173,12 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
                 fill={scoreColor}
                 fontSize="8"
                 fontWeight="500"
-                opacity="0.8">
-
+                opacity="0.8"
+              >
                 {sector.score}/100
               </text>
-            </g>);
-
+            </g>
+          );
         })}
 
         {/* Center indicator */}
@@ -189,20 +189,20 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
       </svg>
 
       {/* Tooltip */}
-      {hoveredSector &&
-      <motion.div
-        initial={{ opacity: 0, y: 5 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/90 backdrop-blur-md border border-border/50 rounded-lg px-4 py-2 text-center z-20">
-
+      {hoveredSector && (
+        <motion.div
+          initial={{ opacity: 0, y: 5 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-card/90 backdrop-blur-md border border-border/50 rounded-lg px-4 py-2 text-center z-20"
+        >
           <p className="text-[10px] text-muted-foreground uppercase tracking-widest">Click to explore</p>
           <p className="text-sm font-medium text-foreground">
-            {GLOBE_SECTORS.find((s) => s.id === hoveredSector)?.name} →
+            {GLOBE_SECTORS.find(s => s.id === hoveredSector)?.name} →
           </p>
         </motion.div>
-      }
-    </div>);
-
+      )}
+    </div>
+  );
 };
 
 export default InteractiveGlobe;
