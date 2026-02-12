@@ -19,8 +19,8 @@ const ViewModeSwitcher: React.FC<ViewModeSwitcherProps> = ({ currentMode, onMode
   return (
     <div className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 py-2">
-        <div className="gap-2 overflow-x-auto scrollbar-hide flex items-center justify-center">
-          <span className="text-[10px] text-muted-foreground uppercase tracking-widest whitespace-nowrap mr-2 hidden sm:inline">
+        <div className="overflow-x-auto scrollbar-hide flex items-start justify-center gap-[6px]">
+          <span className="text-muted-foreground uppercase tracking-widest whitespace-nowrap mr-2 hidden sm:inline text-center text-xs">
             Intelligence Layer
           </span>
           {(Object.keys(VIEW_MODES) as ViewMode[]).map((mode) => {
