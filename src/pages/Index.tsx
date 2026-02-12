@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Activity, Zap, GraduationCap, Sprout, Users, Building2,
-  Globe2, Menu } from 'lucide-react';
+import { Globe2, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import MethodologyPage from '@/components/MethodologyPage';
@@ -15,7 +13,6 @@ import RiskGapIndex from '@/components/RiskGapIndex';
 import FooterSection from '@/components/FooterSection';
 import ViewModeSwitcher from '@/components/ViewModeSwitcher';
 import { SECTOR_DETAILS } from '@/lib/sectorDetails';
-import { type SectorData } from '@/lib/sectors';
 import { ViewMode, VIEW_MODES } from '@/types/view-modes';
 
 type ViewType = 'home' | 'methodology' | string;
@@ -38,15 +35,6 @@ const Index: React.FC = () => {
   };
 
   const currentConfig = VIEW_MODES[viewMode];
-
-  const sectors: SectorData[] = [
-    { id: 'healthcare', name: 'Healthcare', icon: <Activity className="w-6 h-6" />, color: 'from-sector-healthcare to-primary', glowColor: 'shadow-sector-healthcare/50', stabilityScore: 62, aiMaturityLevel: 'Moderate', investmentGap: 'Medium', urgency: 'High', capital: 'Medium', opportunity: 'Strong', enabled: true },
-    { id: 'education', name: 'Education', icon: <GraduationCap className="w-6 h-6" />, color: 'from-sector-education to-[hsl(300,35%,45%)]', glowColor: 'shadow-sector-education/50', stabilityScore: 58, aiMaturityLevel: 'Early', investmentGap: 'High', urgency: 'Medium', capital: 'Low', opportunity: 'Emerging', enabled: true },
-    { id: 'energy', name: 'Energy & Climate', icon: <Zap className="w-6 h-6" />, color: 'from-sector-energy to-destructive', glowColor: 'shadow-sector-energy/50', stabilityScore: 48, aiMaturityLevel: 'Early', investmentGap: 'Critical', urgency: 'Very High', capital: 'High', opportunity: 'Competitive', enabled: true },
-    { id: 'agriculture', name: 'Agriculture', icon: <Sprout className="w-6 h-6" />, color: 'from-sector-agriculture to-[hsl(160,40%,38%)]', glowColor: 'shadow-sector-agriculture/50', stabilityScore: 54, aiMaturityLevel: 'Early', investmentGap: 'High', urgency: 'High', capital: 'Low', opportunity: 'Emerging', enabled: true },
-    { id: 'labor', name: 'Labor & Economy', icon: <Users className="w-6 h-6" />, color: 'from-sector-labor to-[hsl(30,50%,42%)]', glowColor: 'shadow-sector-labor/50', stabilityScore: 51, aiMaturityLevel: 'Nascent', investmentGap: 'Medium', urgency: 'Medium', capital: 'Medium', opportunity: 'Emerging', enabled: true },
-    { id: 'governance', name: 'Governance', icon: <Building2 className="w-6 h-6" />, color: 'from-sector-governance to-sector-education', glowColor: 'shadow-sector-governance/50', stabilityScore: 44, aiMaturityLevel: 'Nascent', investmentGap: 'Critical', urgency: 'High', capital: 'Low', opportunity: 'Strong', enabled: true },
-  ];
 
   if (currentView === 'methodology') return <MethodologyPage onBack={() => setCurrentView('home')} />;
   if (currentView !== 'home' && SECTOR_DETAILS[currentView]) {
@@ -147,7 +135,7 @@ const Index: React.FC = () => {
       <HeroSection onSectorClick={(id) => setCurrentView(id)} viewMode={viewMode} />
 
       <div id="sectors" className="scroll-mt-24">
-        <SectorGrid sectors={sectors} onSectorClick={(id) => setCurrentView(id)} />
+        <SectorGrid onSectorClick={(id) => setCurrentView(id)} />
       </div>
 
       {currentConfig.sections.regions && (
