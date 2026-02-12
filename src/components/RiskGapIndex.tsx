@@ -38,7 +38,7 @@ const getTrendIcon = (trend: string) => {
 
 const RiskGapIndex: React.FC = () => {
   return (
-    <section className="relative z-10 px-4 py-16">
+    <section className="relative z-10 px-4 py-[56px]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">
           <div className="flex items-center justify-center gap-2 mb-3">
