@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {
   Activity, Zap, GraduationCap, Sprout, Users, Building2,
-  Globe2,
-} from 'lucide-react';
+  Globe2 } from
+'lucide-react';
 import { Button } from '@/components/ui/button';
 import MethodologyPage from '@/components/MethodologyPage';
 import SectorDetailPage from '@/components/SectorDetailPage';
@@ -22,13 +22,13 @@ const Index: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewType>('home');
 
   const sectors: SectorData[] = [
-    { id: 'healthcare', name: 'Healthcare', icon: <Activity className="w-6 h-6" />, color: 'from-sector-healthcare to-primary', glowColor: 'shadow-sector-healthcare/50', stabilityScore: 62, aiMaturityLevel: 'Moderate', investmentGap: 'Medium', urgency: 'High', capital: 'Medium', opportunity: 'Strong', enabled: true },
-    { id: 'education', name: 'Education', icon: <GraduationCap className="w-6 h-6" />, color: 'from-sector-education to-[hsl(300,35%,45%)]', glowColor: 'shadow-sector-education/50', stabilityScore: 58, aiMaturityLevel: 'Early', investmentGap: 'High', urgency: 'Medium', capital: 'Low', opportunity: 'Emerging', enabled: true },
-    { id: 'energy', name: 'Energy & Climate', icon: <Zap className="w-6 h-6" />, color: 'from-sector-energy to-destructive', glowColor: 'shadow-sector-energy/50', stabilityScore: 48, aiMaturityLevel: 'Early', investmentGap: 'Critical', urgency: 'Very High', capital: 'High', opportunity: 'Competitive', enabled: true },
-    { id: 'agriculture', name: 'Agriculture', icon: <Sprout className="w-6 h-6" />, color: 'from-sector-agriculture to-[hsl(160,40%,38%)]', glowColor: 'shadow-sector-agriculture/50', stabilityScore: 54, aiMaturityLevel: 'Early', investmentGap: 'High', urgency: 'High', capital: 'Low', opportunity: 'Emerging', enabled: true },
-    { id: 'labor', name: 'Labor & Economy', icon: <Users className="w-6 h-6" />, color: 'from-sector-labor to-[hsl(30,50%,42%)]', glowColor: 'shadow-sector-labor/50', stabilityScore: 51, aiMaturityLevel: 'Nascent', investmentGap: 'Medium', urgency: 'Medium', capital: 'Medium', opportunity: 'Emerging', enabled: true },
-    { id: 'governance', name: 'Governance', icon: <Building2 className="w-6 h-6" />, color: 'from-sector-governance to-sector-education', glowColor: 'shadow-sector-governance/50', stabilityScore: 44, aiMaturityLevel: 'Nascent', investmentGap: 'Critical', urgency: 'High', capital: 'Low', opportunity: 'Strong', enabled: true },
-  ];
+  { id: 'healthcare', name: 'Healthcare', icon: <Activity className="w-6 h-6" />, color: 'from-sector-healthcare to-primary', glowColor: 'shadow-sector-healthcare/50', stabilityScore: 62, aiMaturityLevel: 'Moderate', investmentGap: 'Medium', urgency: 'High', capital: 'Medium', opportunity: 'Strong', enabled: true },
+  { id: 'education', name: 'Education', icon: <GraduationCap className="w-6 h-6" />, color: 'from-sector-education to-[hsl(300,35%,45%)]', glowColor: 'shadow-sector-education/50', stabilityScore: 58, aiMaturityLevel: 'Early', investmentGap: 'High', urgency: 'Medium', capital: 'Low', opportunity: 'Emerging', enabled: true },
+  { id: 'energy', name: 'Energy & Climate', icon: <Zap className="w-6 h-6" />, color: 'from-sector-energy to-destructive', glowColor: 'shadow-sector-energy/50', stabilityScore: 48, aiMaturityLevel: 'Early', investmentGap: 'Critical', urgency: 'Very High', capital: 'High', opportunity: 'Competitive', enabled: true },
+  { id: 'agriculture', name: 'Agriculture', icon: <Sprout className="w-6 h-6" />, color: 'from-sector-agriculture to-[hsl(160,40%,38%)]', glowColor: 'shadow-sector-agriculture/50', stabilityScore: 54, aiMaturityLevel: 'Early', investmentGap: 'High', urgency: 'High', capital: 'Low', opportunity: 'Emerging', enabled: true },
+  { id: 'labor', name: 'Labor & Economy', icon: <Users className="w-6 h-6" />, color: 'from-sector-labor to-[hsl(30,50%,42%)]', glowColor: 'shadow-sector-labor/50', stabilityScore: 51, aiMaturityLevel: 'Nascent', investmentGap: 'Medium', urgency: 'Medium', capital: 'Medium', opportunity: 'Emerging', enabled: true },
+  { id: 'governance', name: 'Governance', icon: <Building2 className="w-6 h-6" />, color: 'from-sector-governance to-sector-education', glowColor: 'shadow-sector-governance/50', stabilityScore: 44, aiMaturityLevel: 'Nascent', investmentGap: 'Critical', urgency: 'High', capital: 'Low', opportunity: 'Strong', enabled: true }];
+
 
   if (currentView === 'methodology') return <MethodologyPage onBack={() => setCurrentView('home')} />;
   if (currentView !== 'home' && SECTOR_DETAILS[currentView]) {
@@ -51,10 +51,10 @@ const Index: React.FC = () => {
             </div>
           </div>
           <div className="flex items-center gap-6">
-            <button onClick={() => setCurrentView('methodology')} className="text-muted-foreground hover:text-foreground text-xs transition-colors uppercase tracking-widest">
+            <button onClick={() => setCurrentView('methodology')} className="text-xs transition-colors uppercase tracking-widest text-purple-400">
               Methodology
             </button>
-            <button className="text-muted-foreground hover:text-foreground text-xs transition-colors uppercase tracking-widest">
+            <button className="text-xs transition-colors uppercase tracking-widest text-purple-400">
               About
             </button>
             <Button size="sm" variant="outline" className="text-xs">
@@ -71,8 +71,8 @@ const Index: React.FC = () => {
       <OpportunityHeatmap onSectorClick={(id) => setCurrentView(id)} />
       <RiskGapIndex />
       <FooterSection onMethodology={() => setCurrentView('methodology')} />
-    </div>
-  );
+    </div>);
+
 };
 
 export default Index;
