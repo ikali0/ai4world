@@ -5,6 +5,7 @@ import AnimatedCounter from '@/components/AnimatedCounter';
 import { Card } from '@/components/ui/card';
 import InteractiveGlobe from '@/components/InteractiveGlobe';
 import { ViewMode, VIEW_MODES } from '@/types/view-modes';
+import { useGlobalSummary } from '@/hooks/use-dashboard-data';
 
 interface HeroSectionProps {
   onSectorClick: (id: string) => void;
@@ -13,6 +14,34 @@ interface HeroSectionProps {
 
 const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick, viewMode = 'public' }) => {
   const config = VIEW_MODES[viewMode];
+  const { data: globalSummary } = useGlobalSummary();
+
+  // Override hero metrics with live data when available
+  const heroMetrics = React.useMemo(() => {
+    if (!globalSummary) return config.heroMetrics;
+
+    if (viewMode === 'public') {
+      return [
+        { value: globalSummary.global_readiness_score ?? 54, label: 'Global Readiness Score', suffix: '/100' },
+        { value: 156, label: 'Countries Tracked' },
+        { value: 72, label: 'Sector Stability', suffix: '%' },
+        { value: globalSummary.total_ai_deployments ?? 48932, label: 'AI Systems Indexed' },
+      ];
+    }
+    if (viewMode === 'opportunity') {
+      return [
+        { value: 87, label: 'High-Grade Opportunities' },
+        { value: globalSummary.global_unmet_need_index ?? 72, label: 'Unmet Need Index', suffix: '%' },
+        { value: Math.round((globalSummary.total_capital_inflow ?? 48300000000) / 1e9), label: 'Addressable Capital', suffix: 'B' },
+        { value: globalSummary.opportunity_gap_index ?? 23, label: 'Market Gaps Identified' },
+      ];
+    }
+    return config.heroMetrics;
+  }, [globalSummary, viewMode, config.heroMetrics]);
+
+  const lastSync = globalSummary?.last_sync
+    ? new Date(globalSummary.last_sync).toLocaleString()
+    : `${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`;
 
   return (
     <header className="relative z-10 pt-16 pb-12 text-center px-4">
@@ -43,7 +72,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick, viewMode = 'pu
         initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.6 }}
         className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-16"
       >
-        {config.heroMetrics.map((item, i) => (
+        {heroMetrics.map((item, i) => (
           <motion.div key={`${viewMode}-${i}`} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}>
             <Card className="p-5 bg-card/60 backdrop-blur-md border-border/50 hover:border-border transition-colors">
               <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">
@@ -66,7 +95,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick, viewMode = 'pu
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
         className="text-xs text-muted-foreground/60 mt-4"
       >
-        Last updated: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()} • Data refreshed every 24 hours
+        Last updated: {lastSync} • Data refreshed every 24 hours
       </motion.p>
     </header>
   );
