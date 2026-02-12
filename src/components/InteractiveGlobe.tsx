@@ -35,9 +35,9 @@ const InteractiveGlobe: React.FC<InteractiveGlobeProps> = ({ onSectorClick }) =>
   const r = 140;
 
   return (
-    <div className="relative w-full max-w-xl mx-auto aspect-square max-h-[450px]">
+    <div className="relative w-full max-w-xl mx-auto aspect-square max-h-[450px] transform-gpu">
       {/* Subtle outer glow */}
-      <div className="absolute inset-8 rounded-full bg-gradient-to-br from-primary/5 via-transparent to-primary/3 blur-2xl" />
+      <div className="absolute inset-8 rounded-full bg-gradient-to-br from-primary/5 via-transparent to-primary/3 blur-2xl transform-gpu" />
 
       <svg viewBox="0 0 400 400" className="w-full h-full relative z-10">
         <defs>
