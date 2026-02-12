@@ -63,7 +63,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick }) => {
 
       <motion.p
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-        className="text-xs text-muted-foreground/60 mt-4">
+        className="text-xs mt-4 text-secondary-foreground my-[10px]">
 
         Last updated: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()} • Data refreshed every 24 hours
       </motion.p>
