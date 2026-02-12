@@ -13,20 +13,20 @@ interface RiskIndicator {
 }
 
 const RISK_DATA: RiskIndicator[] = [
-  { sector: 'Governance', risk: 'Critical', score: 18, trend: 'Worsening', factor: 'Policy framework gaps in 120+ nations' },
-  { sector: 'Energy & Climate', risk: 'Critical', score: 24, trend: 'Stable', factor: 'Grid modernization lag vs climate timeline' },
-  { sector: 'Agriculture', risk: 'Elevated', score: 38, trend: 'Improving', factor: 'Smallholder access below 5% globally' },
-  { sector: 'Labor & Economy', risk: 'Elevated', score: 42, trend: 'Worsening', factor: 'Reskilling programs reaching 12% of displaced' },
-  { sector: 'Education', risk: 'Moderate', score: 51, trend: 'Improving', factor: 'Digital equity improving but uneven' },
-  { sector: 'Healthcare', risk: 'Moderate', score: 58, trend: 'Improving', factor: 'Rural diagnostics remain under-served' },
-];
+{ sector: 'Governance', risk: 'Critical', score: 18, trend: 'Worsening', factor: 'Policy framework gaps in 120+ nations' },
+{ sector: 'Energy & Climate', risk: 'Critical', score: 24, trend: 'Stable', factor: 'Grid modernization lag vs climate timeline' },
+{ sector: 'Agriculture', risk: 'Elevated', score: 38, trend: 'Improving', factor: 'Smallholder access below 5% globally' },
+{ sector: 'Labor & Economy', risk: 'Elevated', score: 42, trend: 'Worsening', factor: 'Reskilling programs reaching 12% of displaced' },
+{ sector: 'Education', risk: 'Moderate', score: 51, trend: 'Improving', factor: 'Digital equity improving but uneven' },
+{ sector: 'Healthcare', risk: 'Moderate', score: 58, trend: 'Improving', factor: 'Rural diagnostics remain under-served' }];
+
 
 const getRiskStyle = (risk: string) => {
   switch (risk) {
-    case 'Critical': return 'bg-destructive/15 text-destructive border-destructive/20';
-    case 'Elevated': return 'bg-sector-energy/15 text-sector-energy border-sector-energy/20';
-    case 'Moderate': return 'bg-status-warning/15 text-status-warning border-status-warning/20';
-    default: return 'bg-status-success/15 text-status-success border-status-success/20';
+    case 'Critical':return 'bg-destructive/15 text-destructive border-destructive/20';
+    case 'Elevated':return 'bg-sector-energy/15 text-sector-energy border-sector-energy/20';
+    case 'Moderate':return 'bg-status-warning/15 text-status-warning border-status-warning/20';
+    default:return 'bg-status-success/15 text-status-success border-status-success/20';
   }
 };
 
@@ -50,8 +50,8 @@ const RiskGapIndex: React.FC = () => {
 
         <Card className="p-6 bg-card/60 backdrop-blur-md border-border/50">
           <div className="space-y-3">
-            {RISK_DATA.map((item) => (
-              <div key={item.sector} className="flex items-center gap-4 p-4 bg-secondary/30 rounded-lg">
+            {RISK_DATA.map((item) =>
+            <div key={item.sector} className="flex items-center gap-4 p-4 bg-secondary/30 rounded-lg border-primary border border-dashed">
                 <AlertTriangle className={`w-4 h-4 shrink-0 ${item.risk === 'Critical' ? 'text-destructive' : item.risk === 'Elevated' ? 'text-sector-energy' : 'text-status-warning'}`} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
@@ -61,7 +61,7 @@ const RiskGapIndex: React.FC = () => {
                       {getTrendIcon(item.trend)} {item.trend}
                     </span>
                   </div>
-                  <p className="text-xs text-muted-foreground">{item.factor}</p>
+                  <p className="text-xs text-zinc-950">{item.factor}</p>
                 </div>
                 <div className="w-32 shrink-0">
                   <div className="flex justify-between mb-1">
@@ -71,12 +71,12 @@ const RiskGapIndex: React.FC = () => {
                   <Progress value={item.score} className="h-1 bg-secondary" />
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </Card>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default RiskGapIndex;
