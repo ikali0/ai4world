@@ -15,7 +15,7 @@ const SECTOR_ICONS: Record<string, React.ReactNode> = {
   'Energy & Climate': <Zap className="w-6 h-6" />,
   'Agriculture': <Sprout className="w-6 h-6" />,
   'Labor & Economy': <Users className="w-6 h-6" />,
-  'Governance': <Building2 className="w-6 h-6" />
+  'Governance': <Building2 className="w-6 h-6" />,
 };
 
 const SECTOR_COLORS: Record<string, string> = {
@@ -24,7 +24,7 @@ const SECTOR_COLORS: Record<string, string> = {
   'Energy & Climate': 'from-sector-energy to-destructive',
   'Agriculture': 'from-sector-agriculture to-[hsl(160,40%,38%)]',
   'Labor & Economy': 'from-sector-labor to-[hsl(30,50%,42%)]',
-  'Governance': 'from-sector-governance to-sector-education'
+  'Governance': 'from-sector-governance to-sector-education',
 };
 
 const SECTOR_ROUTE_IDS: Record<string, string> = {
@@ -33,7 +33,7 @@ const SECTOR_ROUTE_IDS: Record<string, string> = {
   'Energy & Climate': 'energy',
   'Agriculture': 'agriculture',
   'Labor & Economy': 'labor',
-  'Governance': 'governance'
+  'Governance': 'governance',
 };
 
 const getMaturityLabel = (score: number) => {
@@ -73,7 +73,7 @@ const SectorGrid: React.FC<SectorGridProps> = ({ onSectorClick }) => {
         stabilityScore: agg?.stabilityScore ?? 50,
         aiMaturityLevel: getMaturityLabel(agg?.stabilityScore ?? 50),
         investmentGap: getGapLabel(agg?.capitalInflow ?? 0, agg?.unmetNeedIndex ?? 50),
-        enabled: true
+        enabled: true,
       };
     });
   }, [sectors, metrics]);
@@ -87,8 +87,8 @@ const SectorGrid: React.FC<SectorGridProps> = ({ onSectorClick }) => {
             {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-52" />)}
           </div>
         </div>
-      </section>);
-
+      </section>
+    );
   }
 
   return (
@@ -100,16 +100,16 @@ const SectorGrid: React.FC<SectorGridProps> = ({ onSectorClick }) => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {gridData.map((sector, index) =>
-          <motion.div key={sector.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.08 }}>
+          {gridData.map((sector, index) => (
+            <motion.div key={sector.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.08 }}>
               <Card
-              className={`relative p-6 cursor-pointer bg-card/60 backdrop-blur-md border-border/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg ${hoveredSector === sector.id ? 'border-primary/30' : ''}`}
-              onMouseEnter={() => setHoveredSector(sector.id)}
-              onMouseLeave={() => setHoveredSector(null)}
-              onClick={() => onSectorClick(sector.id)}>
-
+                className={`relative p-6 cursor-pointer bg-card/60 backdrop-blur-md border-border/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg ${hoveredSector === sector.id ? 'border-primary/30' : ''}`}
+                onMouseEnter={() => setHoveredSector(sector.id)}
+                onMouseLeave={() => setHoveredSector(null)}
+                onClick={() => onSectorClick(sector.id)}
+              >
                 <div className="relative z-10">
-                  <div className="flex items-start justify-between mb-1">
+                  <div className="flex items-start justify-between mb-4">
                     <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${sector.color} text-foreground`}>
                       {sector.icon}
                     </div>
@@ -146,11 +146,11 @@ const SectorGrid: React.FC<SectorGridProps> = ({ onSectorClick }) => {
                 </div>
               </Card>
             </motion.div>
-          )}
+          ))}
         </div>
       </div>
-    </section>);
-
+    </section>
+  );
 };
 
 export default SectorGrid;
