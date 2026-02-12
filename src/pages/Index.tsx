@@ -12,6 +12,7 @@ import QuadrantMatrix from '@/components/QuadrantMatrix';
 import RiskGapIndex from '@/components/RiskGapIndex';
 import FooterSection from '@/components/FooterSection';
 import ViewModeSwitcher from '@/components/ViewModeSwitcher';
+import SectorComparison from '@/components/SectorComparison';
 import { SECTOR_DETAILS } from '@/lib/sectorDetails';
 import { ViewMode, VIEW_MODES } from '@/types/view-modes';
 
@@ -42,9 +43,9 @@ const Index: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground overflow-hidden">
+    <div className="min-h-screen bg-background text-foreground overflow-hidden will-change-transform">
       {/* Subtle grid background */}
-      <div className="fixed inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.15)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.15)_1px,transparent_1px)] bg-[size:5rem_5rem] opacity-30 pointer-events-none" />
+      <div className="fixed inset-0 transform-gpu bg-[linear-gradient(to_right,hsl(var(--border)/0.15)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.15)_1px,transparent_1px)] bg-[size:5rem_5rem] opacity-30 pointer-events-none" />
 
       {/* Navigation */}
       <nav className="relative z-20 pt-4 pb-3 px-4 sm:pt-6 sm:pb-4">
@@ -64,6 +65,9 @@ const Index: React.FC = () => {
             </button>
             <button onClick={() => scrollToSection('regions')} className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
               Regions
+            </button>
+            <button onClick={() => scrollToSection('comparison')} className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
+              Compare
             </button>
             <button onClick={() => scrollToSection('opportunities')} className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
               Opportunities
@@ -106,6 +110,9 @@ const Index: React.FC = () => {
                   <button onClick={() => scrollToSection('regions')} className="block w-full text-left text-sm text-foreground hover:text-primary transition-colors py-1.5">
                     Regions
                   </button>
+                  <button onClick={() => scrollToSection('comparison')} className="block w-full text-left text-sm text-foreground hover:text-primary transition-colors py-1.5">
+                    Compare
+                  </button>
                   <button onClick={() => scrollToSection('opportunities')} className="block w-full text-left text-sm text-foreground hover:text-primary transition-colors py-1.5">
                     Opportunities
                   </button>
@@ -143,6 +150,10 @@ const Index: React.FC = () => {
           <RegionalFilter />
         </div>
       }
+
+      <div id="comparison" className="scroll-mt-24">
+        <SectorComparison />
+      </div>
 
       {currentConfig.sections.quadrant &&
       <div id="opportunities" className="scroll-mt-24">
