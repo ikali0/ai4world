@@ -14,10 +14,260 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      global_summary: {
+        Row: {
+          global_readiness_score: number | null
+          global_unmet_need_index: number | null
+          id: string
+          last_sync: string | null
+          opportunity_gap_index: number | null
+          total_ai_deployments: number | null
+          total_capital_inflow: number | null
+        }
+        Insert: {
+          global_readiness_score?: number | null
+          global_unmet_need_index?: number | null
+          id?: string
+          last_sync?: string | null
+          opportunity_gap_index?: number | null
+          total_ai_deployments?: number | null
+          total_capital_inflow?: number | null
+        }
+        Update: {
+          global_readiness_score?: number | null
+          global_unmet_need_index?: number | null
+          id?: string
+          last_sync?: string | null
+          opportunity_gap_index?: number | null
+          total_ai_deployments?: number | null
+          total_capital_inflow?: number | null
+        }
+        Relationships: []
+      }
+      investment_flows: {
+        Row: {
+          amount_usd: number | null
+          created_at: string | null
+          deal_count: number | null
+          id: string
+          region_id: string | null
+          sector_id: string | null
+          stage: string | null
+          year: number | null
+        }
+        Insert: {
+          amount_usd?: number | null
+          created_at?: string | null
+          deal_count?: number | null
+          id?: string
+          region_id?: string | null
+          sector_id?: string | null
+          stage?: string | null
+          year?: number | null
+        }
+        Update: {
+          amount_usd?: number | null
+          created_at?: string | null
+          deal_count?: number | null
+          id?: string
+          region_id?: string | null
+          sector_id?: string | null
+          stage?: string | null
+          year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "investment_flows_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "investment_flows_sector_id_fkey"
+            columns: ["sector_id"]
+            isOneToOne: false
+            referencedRelation: "sectors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      regions: {
+        Row: {
+          ai_policy_maturity: number | null
+          created_at: string | null
+          gdp_usd: number | null
+          id: string
+          income_level: string | null
+          iso_code: string
+          name: string
+          population: number | null
+          regulatory_index: number | null
+        }
+        Insert: {
+          ai_policy_maturity?: number | null
+          created_at?: string | null
+          gdp_usd?: number | null
+          id?: string
+          income_level?: string | null
+          iso_code: string
+          name: string
+          population?: number | null
+          regulatory_index?: number | null
+        }
+        Update: {
+          ai_policy_maturity?: number | null
+          created_at?: string | null
+          gdp_usd?: number | null
+          id?: string
+          income_level?: string | null
+          iso_code?: string
+          name?: string
+          population?: number | null
+          regulatory_index?: number | null
+        }
+        Relationships: []
+      }
+      sector_metrics: {
+        Row: {
+          ai_adoption_rate: number | null
+          ai_deployments: number | null
+          ai_maturity_score: number | null
+          capital_growth_rate: number | null
+          capital_inflow_usd: number | null
+          confidence_score: number | null
+          id: string
+          infrastructure_gap: number | null
+          last_updated: string | null
+          policy_readiness_score: number | null
+          region_id: string | null
+          regulatory_friction_index: number | null
+          sector_id: string | null
+          talent_density_index: number | null
+          unmet_need_index: number | null
+          workforce_readiness: number | null
+          year: number
+        }
+        Insert: {
+          ai_adoption_rate?: number | null
+          ai_deployments?: number | null
+          ai_maturity_score?: number | null
+          capital_growth_rate?: number | null
+          capital_inflow_usd?: number | null
+          confidence_score?: number | null
+          id?: string
+          infrastructure_gap?: number | null
+          last_updated?: string | null
+          policy_readiness_score?: number | null
+          region_id?: string | null
+          regulatory_friction_index?: number | null
+          sector_id?: string | null
+          talent_density_index?: number | null
+          unmet_need_index?: number | null
+          workforce_readiness?: number | null
+          year: number
+        }
+        Update: {
+          ai_adoption_rate?: number | null
+          ai_deployments?: number | null
+          ai_maturity_score?: number | null
+          capital_growth_rate?: number | null
+          capital_inflow_usd?: number | null
+          confidence_score?: number | null
+          id?: string
+          infrastructure_gap?: number | null
+          last_updated?: string | null
+          policy_readiness_score?: number | null
+          region_id?: string | null
+          regulatory_friction_index?: number | null
+          sector_id?: string | null
+          talent_density_index?: number | null
+          unmet_need_index?: number | null
+          workforce_readiness?: number | null
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sector_metrics_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sector_metrics_sector_id_fkey"
+            columns: ["sector_id"]
+            isOneToOne: false
+            referencedRelation: "sectors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sectors: {
+        Row: {
+          baseline_system_risk: number | null
+          created_at: string | null
+          description: string | null
+          global_priority_weight: number | null
+          id: string
+          name: string
+        }
+        Insert: {
+          baseline_system_risk?: number | null
+          created_at?: string | null
+          description?: string | null
+          global_priority_weight?: number | null
+          id?: string
+          name: string
+        }
+        Update: {
+          baseline_system_risk?: number | null
+          created_at?: string | null
+          description?: string | null
+          global_priority_weight?: number | null
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
-      [_ in never]: never
+      opportunity_scores: {
+        Row: {
+          adjusted_opportunity_score: number | null
+          region_id: string | null
+          sector_id: string | null
+          year: number | null
+        }
+        Insert: {
+          adjusted_opportunity_score?: never
+          region_id?: string | null
+          sector_id?: string | null
+          year?: number | null
+        }
+        Update: {
+          adjusted_opportunity_score?: never
+          region_id?: string | null
+          sector_id?: string | null
+          year?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sector_metrics_region_id_fkey"
+            columns: ["region_id"]
+            isOneToOne: false
+            referencedRelation: "regions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "sector_metrics_sector_id_fkey"
+            columns: ["sector_id"]
+            isOneToOne: false
+            referencedRelation: "sectors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       [_ in never]: never
