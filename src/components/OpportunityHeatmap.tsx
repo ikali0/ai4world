@@ -97,7 +97,7 @@ const OpportunityHeatmap: React.FC<OpportunityHeatmapProps> = ({ onSectorClick }
                 <div className="absolute top-0 left-0 h-1 bg-gradient-to-r from-primary via-accent to-primary" style={{ width: `${sector.opportunityScore}%` }} />
 
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-bold text-foreground">{sector.name}</h3>
+                  <h3 className="font-bold text-foreground text-sm">{sector.name}</h3>
                   <div className={`text-2xl font-bold ${getHeatTextColor(sector.opportunityScore)}`}>
                     {sector.opportunityScore}
                   </div>
