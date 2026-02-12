@@ -45,7 +45,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
             Data updated every 24 hours • Last sync: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
           </p>
           <p className="text-xs mt-2 text-primary">
-            © 2025 AI Sector Intelligence Atlas • Global Intelligence Platform
+            © 2026 AI Atlas • Global Intelligence Platform
           </p>
         </div>
       </div>
