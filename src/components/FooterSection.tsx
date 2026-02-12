@@ -41,7 +41,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
             <span className="text-border/50">•</span>
             <button className="text-xs transition-colors uppercase tracking-widest text-status-warning">Contact</button>
           </div>
-          <p className="text-xs text-destructive-foreground text-center">
+          <p className="text-xs text-center text-sidebar-foreground">
             Data updated every 24 hours • Last sync: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
           </p>
           <p className="text-xs mt-2 text-primary">
