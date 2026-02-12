@@ -44,8 +44,8 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
           
 
 
-          <p className="text-xs mt-2 text-primary">
-            © 2025 AI Sector Intelligence Atlas • Global Intelligence Platform
+          <p className="text-xs mt-2 text-primary">© 2025 AI Sector Intelligence Atlas
+
           </p>
         </div>
       </div>

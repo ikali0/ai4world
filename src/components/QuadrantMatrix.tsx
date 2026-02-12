@@ -35,7 +35,7 @@ const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
             <Lightbulb className="w-5 h-5 text-primary" />
             <h2 className="text-2xl md:text-4xl font-bold text-foreground">Opportunity Quadrant</h2>
           </div>
-          <p className="text-muted-foreground text-sm md:text-base font-light max-w-lg mx-auto">
+          <p className="text-muted-foreground text-sm font-light max-w-lg mx-auto md:text-sm">
             High Need / Low Capital = strongest opportunity for founders and investors
           </p>
         </div>
