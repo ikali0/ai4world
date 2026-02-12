@@ -35,7 +35,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
           <div className="flex items-center justify-center gap-6 mb-4">
             <button onClick={onMethodology} className="text-xs transition-colors uppercase tracking-widest text-destructive">Methodology</button>
             <span className="text-border/50">•</span>
-            <button className="text-xs transition-colors uppercase tracking-widest text-destructive-foreground">Data Sources</button>
+            <button className="text-xs transition-colors uppercase tracking-widest text-primary">Data Sources</button>
             <span className="text-border/50">•</span>
             <button className="text-xs transition-colors uppercase tracking-widest text-sector-education">API Access</button>
             <span className="text-border/50">•</span>
