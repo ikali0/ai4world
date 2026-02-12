@@ -20,7 +20,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick }) => {
 
       <motion.h1
         initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.2 }}
-        className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-muted-foreground bg-clip-text text-transparent tracking-tight leading-tight">
+        className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-muted-foreground bg-clip-text text-transparent tracking-tight leading-tight lg:text-4xl">
 
         AI Sector Intelligence Atlas
       </motion.h1>
