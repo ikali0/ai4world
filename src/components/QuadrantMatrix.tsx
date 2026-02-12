@@ -55,7 +55,7 @@ const QuadrantMatrix: React.FC<QuadrantMatrixProps> = ({ onSectorClick }) => {
               <div className="absolute bottom-0 left-0 right-0 h-px bg-border/40" />
 
               {/* Quadrant labels — hidden on very small screens */}
-              <span className="hidden sm:block absolute top-2 left-2 text-[8px] md:text-[9px] text-primary/60 uppercase tracking-widest leading-tight">
+              <span className="hidden sm:block absolute top-2 left-2 text-[8px] uppercase tracking-widest leading-tight md:text-xs text-foreground">
                 High Need<br />Low Capital
               </span>
               <span className="hidden sm:block absolute top-2 right-2 text-[8px] md:text-[9px] text-muted-foreground/40 uppercase tracking-widest text-right leading-tight">
