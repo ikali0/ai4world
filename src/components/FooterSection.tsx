@@ -30,7 +30,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
         <div className="mt-12 pt-8 border-t border-border/50 my-[42px]">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Globe2 className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-foreground">AI Sector Intelligence Atlas</span>
+            <span className="text-sm font-semibold text-foreground">AI Intelligence Atlas</span>
           </div>
           <div className="flex items-center justify-center gap-6 mb-4">
             <button onClick={onMethodology} className="text-xs transition-colors uppercase tracking-widest text-destructive">Methodology</button>
