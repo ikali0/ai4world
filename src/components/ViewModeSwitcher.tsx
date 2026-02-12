@@ -19,10 +19,10 @@ const ViewModeSwitcher: React.FC<ViewModeSwitcherProps> = ({ currentMode, onMode
   return (
     <div className="sticky top-0 z-30 bg-background/80 backdrop-blur-md border-b border-border/50">
       <div className="max-w-7xl mx-auto px-4 py-2">
-        <div className="gap-2 overflow-x-auto scrollbar-hide flex items-center justify-center">
-          <span className="text-[10px] text-muted-foreground uppercase tracking-widest whitespace-nowrap mr-2 hidden sm:inline">
-            Intelligence Layer
-          </span>
+        <div className="overflow-x-auto scrollbar-hide flex items-center justify-center gap-[6px]">
+          
+
+
           {(Object.keys(VIEW_MODES) as ViewMode[]).map((mode) => {
             const config = VIEW_MODES[mode];
             const Icon = ICONS[mode];
@@ -49,7 +49,7 @@ const ViewModeSwitcher: React.FC<ViewModeSwitcherProps> = ({ currentMode, onMode
                 }
                 <span className="relative z-10 flex items-center gap-1.5">
                   <Icon className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">{config.label}</span>
+                  <span className="hidden sm:inline text-center">{config.label}</span>
                   <span className="sm:hidden">{config.label.split(' ')[0]}</span>
                 </span>
               </motion.button>);
