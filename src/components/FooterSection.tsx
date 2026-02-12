@@ -18,7 +18,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
             We're building the definitive intelligence platform for AI readiness and system stability.
             Join as a data partner, researcher, or institutional collaborator.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-[8px]">
             <Button size="lg">Request Partnership</Button>
             <Button size="lg" variant="outline">
               <FileDown className="w-4 h-4 mr-2" />
