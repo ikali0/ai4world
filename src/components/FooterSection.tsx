@@ -13,7 +13,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
       <div className="max-w-4xl mx-auto text-center">
         <Card className="p-12 bg-gradient-to-br from-primary/8 via-card to-secondary/30 backdrop-blur-md border-primary/20">
           <Target className="w-10 h-10 text-primary mx-auto mb-4" />
-          <h2 className="text-2xl font-bold text-foreground mb-3">Institutional Partnerships</h2>
+          <h2 className="text-2xl font-bold text-foreground mb-3"> Partnerships</h2>
           <p className="text-muted-foreground text-base mb-6 max-w-2xl mx-auto font-light">
             We're building the definitive intelligence platform for AI readiness and system stability.
             Join as a data partner, researcher, or institutional collaborator.
