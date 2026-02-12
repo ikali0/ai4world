@@ -61,9 +61,9 @@ const Index: React.FC = () => {
             <button onClick={() => navigate('methodology')} className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
               Methodology
             </button>
-            <button className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
-              About
-            </button>
+            
+
+
             <Button size="sm" variant="outline" className="text-xs">
               Partner With Us
             </Button>
