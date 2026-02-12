@@ -41,11 +41,11 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
             <span className="text-border/50">•</span>
             <button className="text-xs transition-colors uppercase tracking-widest text-status-warning">Contact</button>
           </div>
-          <p className="text-xs text-destructive-foreground text-center">
-            Data updated every 24 hours • Last sync: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
-          </p>
+          
+
+
           <p className="text-xs mt-2 text-primary">
-            © 2025 AI Sector Intelligence Atlas • Global Intelligence Platform
+            © 2025 AI Atlas • Global Intelligence Platform
           </p>
         </div>
       </div>
