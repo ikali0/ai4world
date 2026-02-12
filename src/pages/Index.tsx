@@ -11,6 +11,8 @@ import {
 import AnimatedCounter from '@/components/AnimatedCounter';
 import MethodologyPage from '@/components/MethodologyPage';
 import SectorDetailPage from '@/components/SectorDetailPage';
+import InteractiveGlobe from '@/components/InteractiveGlobe';
+import OpportunityHeatmap from '@/components/OpportunityHeatmap';
 import { SECTOR_DETAILS } from '@/lib/sectorDetails';
 import { type SectorData, getGapColor, getStabilityColor } from '@/lib/sectors';
 
@@ -106,21 +108,9 @@ const Index: React.FC = () => {
           ))}
         </motion.div>
 
-        {/* Globe Visual */}
-        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 1.1 }} className="relative max-w-3xl mx-auto h-64 mb-12">
-          <div className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary/20 via-sector-education/20 to-[hsl(330,81%,56%)]/20 backdrop-blur-sm border border-primary/30">
-            <motion.div animate={{ scale: [1, 1.05, 1], rotate: [0, 5, -5, 0] }} transition={{ duration: 8, repeat: Infinity, repeatType: 'reverse' }} className="absolute inset-0 flex items-center justify-center">
-              <Globe2 className="w-32 h-32 text-primary/30" />
-            </motion.div>
-            <div className="absolute inset-0 rounded-lg overflow-hidden opacity-30">
-              <div className="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" />
-              <div className="absolute top-1/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-              <div className="absolute top-3/4 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
-              <div className="absolute top-0 bottom-0 left-1/2 w-px bg-gradient-to-b from-transparent via-primary to-transparent" />
-              <div className="absolute top-0 bottom-0 left-1/4 w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
-              <div className="absolute top-0 bottom-0 left-3/4 w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
-            </div>
-          </div>
+        {/* Interactive Globe */}
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8, delay: 1.1 }} className="mb-12">
+          <InteractiveGlobe onSectorClick={(id) => setCurrentView(id)} />
         </motion.div>
       </header>
 
@@ -250,6 +240,9 @@ const Index: React.FC = () => {
           </Card>
         </div>
       </section>
+
+      {/* Opportunity Heatmap - Startup & Investor Lens */}
+      <OpportunityHeatmap onSectorClick={(id) => setCurrentView(id)} />
 
       {/* Footer CTA */}
       <footer className="relative z-10 py-16 px-4">
