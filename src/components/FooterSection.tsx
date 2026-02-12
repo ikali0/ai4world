@@ -18,7 +18,7 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
             We're building the definitive intelligence platform for AI readiness and system stability.
             Join as a data partner, researcher, or institutional collaborator.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-[8px]">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button size="lg">Request Partnership</Button>
             <Button size="lg" variant="outline">
               <FileDown className="w-4 h-4 mr-2" />
@@ -27,26 +27,26 @@ const FooterSection: React.FC<FooterSectionProps> = ({ onMethodology }) => {
           </div>
         </Card>
 
-        <div className="mt-12 pt-8 border-t border-border/50 my-[42px]">
+        <div className="mt-12 pt-8 border-t border-border/50">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Globe2 className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-foreground">AI Intelligence Atlas</span>
+            <span className="text-sm font-semibold text-foreground">AI Sector Intelligence Atlas</span>
           </div>
           <div className="flex items-center justify-center gap-6 mb-4">
             <button onClick={onMethodology} className="text-xs transition-colors uppercase tracking-widest text-destructive">Methodology</button>
             <span className="text-border/50">•</span>
-            <button className="text-xs transition-colors uppercase tracking-widest text-primary">Data Sources</button>
+            <button className="text-xs transition-colors uppercase tracking-widest text-destructive-foreground">Data Sources</button>
             <span className="text-border/50">•</span>
             <button className="text-xs transition-colors uppercase tracking-widest text-sector-education">API Access</button>
             <span className="text-border/50">•</span>
             <button className="text-xs transition-colors uppercase tracking-widest text-status-warning">Contact</button>
           </div>
-          
-
-
-          
-
-
+          <p className="text-xs text-destructive-foreground text-center">
+            Data updated every 24 hours • Last sync: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()}
+          </p>
+          <p className="text-xs mt-2 text-primary">
+            © 2025 AI Sector Intelligence Atlas • Global Intelligence Platform
+          </p>
         </div>
       </div>
     </footer>);

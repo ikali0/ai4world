@@ -20,31 +20,31 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick }) => {
 
       <motion.h1
         initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, delay: 0.2 }}
-        className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-muted-foreground bg-clip-text text-transparent tracking-tight leading-tight lg:text-4xl">
-
+        className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground via-primary to-muted-foreground bg-clip-text text-transparent tracking-tight leading-tight"
+      >
         AI Sector Intelligence Atlas
       </motion.h1>
 
       <motion.p
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.4 }}
-        className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto mb-12 leading-relaxed font-light">
-
-        Mapping artificial intelligence readiness, deployment impact, and system stability across critical global infrastructure.
-      
+        className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto mb-12 leading-relaxed font-light"
+      >
+        Mapping artificial intelligence readiness, deployment impact, and system stability
+        across critical global infrastructure. A public intelligence portal for transparency and collaborative decision-making.
       </motion.p>
 
       {/* Live Counters */}
       <motion.div
         initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.6 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-16">
-
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-16"
+      >
         {[
-        { value: 156, label: 'Countries Tracked' },
-        { value: 6, label: 'Sectors Analyzed' },
-        { value: 48932, label: 'AI Systems Indexed' },
-        { value: 54, label: 'Global Readiness Score', suffix: '/100' }].
-        map((item, i) =>
-        <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}>
+          { value: 156, label: 'Countries Tracked' },
+          { value: 6, label: 'Sectors Analyzed' },
+          { value: 48932, label: 'AI Systems Indexed' },
+          { value: 54, label: 'Global Readiness Score', suffix: '/100' },
+        ].map((item, i) => (
+          <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}>
             <Card className="p-5 bg-card/60 backdrop-blur-md border-border/50 hover:border-border transition-colors">
               <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">
                 <AnimatedCounter value={item.value} />
@@ -53,7 +53,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick }) => {
               <div className="text-[10px] text-muted-foreground uppercase tracking-widest">{item.label}</div>
             </Card>
           </motion.div>
-        )}
+        ))}
       </motion.div>
 
       {/* Interactive Globe */}
@@ -63,12 +63,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick }) => {
 
       <motion.p
         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-        className="text-xs text-muted-foreground/60 mt-4">
-
+        className="text-xs text-muted-foreground/60 mt-4"
+      >
         Last updated: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()} • Data refreshed every 24 hours
       </motion.p>
-    </header>);
-
+    </header>
+  );
 };
 
 export default HeroSection;

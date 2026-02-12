@@ -51,8 +51,8 @@ const Index: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-3 cursor-pointer" onClick={() => navigate('home')}>
             <Globe2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             <div>
-              
-              
+              <div className="text-foreground font-semibold text-xs sm:text-sm tracking-wide">AI Sector Intelligence Atlas</div>
+              <div className="text-muted-foreground text-[9px] sm:text-[10px] uppercase tracking-widest">Global Systems Monitor</div>
             </div>
           </div>
 
