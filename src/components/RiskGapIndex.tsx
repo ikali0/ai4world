@@ -12,7 +12,7 @@ const SECTOR_RISK_FACTORS: Record<string, string> = {
   'Agriculture': 'Smallholder access below 5% globally',
   'Labor & Economy': 'Reskilling programs reaching 12% of displaced',
   'Education': 'Digital equity improving but uneven',
-  'Healthcare': 'Rural diagnostics remain under-served',
+  'Healthcare': 'Rural diagnostics remain under-served'
 };
 
 const getRiskLabel = (score: number): 'Critical' | 'Elevated' | 'Moderate' | 'Low' => {
@@ -30,10 +30,10 @@ const getTrend = (growthRate: number): 'Worsening' | 'Stable' | 'Improving' => {
 
 const getRiskStyle = (risk: string) => {
   switch (risk) {
-    case 'Critical': return 'bg-destructive/15 text-destructive border-destructive/20';
-    case 'Elevated': return 'bg-sector-energy/15 text-sector-energy border-sector-energy/20';
-    case 'Moderate': return 'bg-status-warning/15 text-status-warning border-status-warning/20';
-    default: return 'bg-status-success/15 text-status-success border-status-success/20';
+    case 'Critical':return 'bg-destructive/15 text-destructive border-destructive/20';
+    case 'Elevated':return 'bg-sector-energy/15 text-sector-energy border-sector-energy/20';
+    case 'Moderate':return 'bg-status-warning/15 text-status-warning border-status-warning/20';
+    default:return 'bg-status-success/15 text-status-success border-status-success/20';
   }
 };
 
@@ -57,15 +57,15 @@ const RiskGapIndex: React.FC = () => {
       const adjustedScore = Math.round(resilience * (1 - (s.baseline_system_risk ?? 50) / 200));
       // Avg capital growth rate across regions for trend
       const regionMetrics = metrics.filter((m) => m.sector_id === s.id);
-      const avgGrowth = regionMetrics.length
-        ? regionMetrics.reduce((sum, m) => sum + (m.capital_growth_rate ?? 0), 0) / regionMetrics.length
-        : 0;
+      const avgGrowth = regionMetrics.length ?
+      regionMetrics.reduce((sum, m) => sum + (m.capital_growth_rate ?? 0), 0) / regionMetrics.length :
+      0;
       return {
         sector: s.name,
         risk: getRiskLabel(adjustedScore),
         score: adjustedScore,
         trend: getTrend(avgGrowth),
-        factor: SECTOR_RISK_FACTORS[s.name] ?? 'Systemic vulnerabilities detected',
+        factor: SECTOR_RISK_FACTORS[s.name] ?? 'Systemic vulnerabilities detected'
       };
     }).sort((a, b) => a.score - b.score);
   }, [sectors, metrics]);
@@ -77,8 +77,8 @@ const RiskGapIndex: React.FC = () => {
           <Skeleton className="h-10 w-64 mx-auto mb-8" />
           <Skeleton className="h-64 w-full" />
         </div>
-      </section>
-    );
+      </section>);
+
   }
 
   return (
@@ -94,8 +94,8 @@ const RiskGapIndex: React.FC = () => {
 
         <Card className="p-6 bg-card/60 backdrop-blur-md border-border/50">
           <div className="space-y-3">
-            {riskData.map((item) => (
-              <div key={item.sector} className="flex items-center gap-4 p-4 bg-secondary/30 rounded-lg">
+            {riskData.map((item) =>
+            <div key={item.sector} className="p-4 bg-secondary/30 rounded-lg flex items-center justify-center gap-[14px]">
                 <AlertTriangle className={`w-4 h-4 shrink-0 ${item.risk === 'Critical' ? 'text-destructive' : item.risk === 'Elevated' ? 'text-sector-energy' : 'text-status-warning'}`} />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
@@ -115,12 +115,12 @@ const RiskGapIndex: React.FC = () => {
                   <Progress value={item.score} className="h-1 bg-secondary" />
                 </div>
               </div>
-            ))}
+            )}
           </div>
         </Card>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default RiskGapIndex;
