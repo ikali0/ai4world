@@ -24,25 +24,25 @@ const SectorGrid: React.FC<SectorGridProps> = ({ sectors, onSectorClick }) => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-          {sectors.map((sector, index) => (
-            <motion.div key={sector.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.08 }}>
+          {sectors.map((sector, index) =>
+          <motion.div key={sector.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.08 }}>
               <Card
-                className={`relative p-6 cursor-pointer bg-card/60 backdrop-blur-md border-border/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg ${hoveredSector === sector.id ? 'border-primary/30' : ''}`}
-                onMouseEnter={() => setHoveredSector(sector.id)}
-                onMouseLeave={() => setHoveredSector(null)}
-                onClick={() => sector.enabled && onSectorClick(sector.id)}
-              >
+              className={`relative p-6 cursor-pointer bg-card/60 backdrop-blur-md border-border/50 transition-all duration-300 hover:border-primary/30 hover:shadow-lg ${hoveredSector === sector.id ? 'border-primary/30' : ''}`}
+              onMouseEnter={() => setHoveredSector(sector.id)}
+              onMouseLeave={() => setHoveredSector(null)}
+              onClick={() => sector.enabled && onSectorClick(sector.id)}>
+
                 <div className="relative z-10">
                   <div className="flex items-start justify-between mb-4">
                     <div className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${sector.color} text-foreground`}>
                       {sector.icon}
                     </div>
-                    {!sector.enabled && (
-                      <Badge variant="secondary" className="text-[10px]">Coming Soon</Badge>
-                    )}
+                    {!sector.enabled &&
+                  <Badge variant="secondary" className="text-[10px]">Coming Soon</Badge>
+                  }
                   </div>
 
-                  <h3 className="text-lg font-semibold mb-4 text-foreground">{sector.name}</h3>
+                  <h3 className="font-semibold mb-4 text-sm text-slate-950">{sector.name}</h3>
 
                   <div className="space-y-3">
                     <div>
@@ -66,20 +66,20 @@ const SectorGrid: React.FC<SectorGridProps> = ({ sectors, onSectorClick }) => {
                     </div>
                   </div>
 
-                  {sector.enabled && (
-                    <Button className="w-full mt-4" variant="secondary" size="sm">
+                  {sector.enabled &&
+                <Button className="w-full mt-4" variant="secondary" size="sm">
                       View Analysis
                       <ArrowRight className="w-3 h-3 ml-2" />
                     </Button>
-                  )}
+                }
                 </div>
               </Card>
             </motion.div>
-          ))}
+          )}
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 };
 
 export default SectorGrid;
