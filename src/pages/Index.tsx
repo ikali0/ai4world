@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import {
   Activity, Zap, GraduationCap, Sprout, Users, Building2,
-  Globe2 } from
-'lucide-react';
+  Globe2, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet';
 import MethodologyPage from '@/components/MethodologyPage';
 import SectorDetailPage from '@/components/SectorDetailPage';
 import HeroSection from '@/components/HeroSection';
@@ -20,6 +20,12 @@ type ViewType = 'home' | 'methodology' | string;
 
 const Index: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewType>('home');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navigate = (view: ViewType) => {
+    setCurrentView(view);
+    setMobileMenuOpen(false);
+  };
 
   const sectors: SectorData[] = [
   { id: 'healthcare', name: 'Healthcare', icon: <Activity className="w-6 h-6" />, color: 'from-sector-healthcare to-primary', glowColor: 'shadow-sector-healthcare/50', stabilityScore: 62, aiMaturityLevel: 'Moderate', investmentGap: 'Medium', urgency: 'High', capital: 'Medium', opportunity: 'Strong', enabled: true },
@@ -28,7 +34,6 @@ const Index: React.FC = () => {
   { id: 'agriculture', name: 'Agriculture', icon: <Sprout className="w-6 h-6" />, color: 'from-sector-agriculture to-[hsl(160,40%,38%)]', glowColor: 'shadow-sector-agriculture/50', stabilityScore: 54, aiMaturityLevel: 'Early', investmentGap: 'High', urgency: 'High', capital: 'Low', opportunity: 'Emerging', enabled: true },
   { id: 'labor', name: 'Labor & Economy', icon: <Users className="w-6 h-6" />, color: 'from-sector-labor to-[hsl(30,50%,42%)]', glowColor: 'shadow-sector-labor/50', stabilityScore: 51, aiMaturityLevel: 'Nascent', investmentGap: 'Medium', urgency: 'Medium', capital: 'Medium', opportunity: 'Emerging', enabled: true },
   { id: 'governance', name: 'Governance', icon: <Building2 className="w-6 h-6" />, color: 'from-sector-governance to-sector-education', glowColor: 'shadow-sector-governance/50', stabilityScore: 44, aiMaturityLevel: 'Nascent', investmentGap: 'Critical', urgency: 'High', capital: 'Low', opportunity: 'Strong', enabled: true }];
-
 
   if (currentView === 'methodology') return <MethodologyPage onBack={() => setCurrentView('home')} />;
   if (currentView !== 'home' && SECTOR_DETAILS[currentView]) {
@@ -41,26 +46,58 @@ const Index: React.FC = () => {
       <div className="fixed inset-0 bg-[linear-gradient(to_right,hsl(var(--border)/0.15)_1px,transparent_1px),linear-gradient(to_bottom,hsl(var(--border)/0.15)_1px,transparent_1px)] bg-[size:5rem_5rem] opacity-30 pointer-events-none" />
 
       {/* Navigation */}
-      <nav className="relative z-20 pt-6 pb-4 px-4">
+      <nav className="relative z-20 pt-4 pb-3 px-4 sm:pt-6 sm:pb-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setCurrentView('home')}>
-            <Globe2 className="w-6 h-6 text-primary" />
+          <div className="flex items-center gap-2 sm:gap-3 cursor-pointer" onClick={() => navigate('home')}>
+            <Globe2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             <div>
-              <div className="text-foreground font-semibold text-sm tracking-wide">AI Sector Intelligence Atlas</div>
-              <div className="text-muted-foreground text-[10px] uppercase tracking-widest">Global Systems Monitor</div>
+              <div className="text-foreground font-semibold text-xs sm:text-sm tracking-wide">AI Sector Intelligence Atlas</div>
+              <div className="text-muted-foreground text-[9px] sm:text-[10px] uppercase tracking-widest">Global Systems Monitor</div>
             </div>
           </div>
-          <div className="flex items-center gap-6">
-            <button onClick={() => setCurrentView('methodology')} className="text-xs transition-colors uppercase tracking-widest text-purple-400">
+
+          {/* Desktop nav */}
+          <div className="hidden md:flex items-center gap-6">
+            <button onClick={() => navigate('methodology')} className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
               Methodology
             </button>
-            <button className="text-xs transition-colors uppercase tracking-widest text-purple-400">
+            <button className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
               About
             </button>
             <Button size="sm" variant="outline" className="text-xs">
               Partner With Us
             </Button>
           </div>
+
+          {/* Mobile hamburger */}
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon" className="h-9 w-9">
+                <Menu className="w-5 h-5" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-72 bg-card border-border">
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <div className="flex flex-col gap-6 mt-8">
+                <div className="flex items-center gap-2 mb-4">
+                  <Globe2 className="w-5 h-5 text-primary" />
+                  <span className="font-semibold text-sm text-foreground">Atlas</span>
+                </div>
+                <button onClick={() => navigate('home')} className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2 border-b border-border/30">
+                  Home
+                </button>
+                <button onClick={() => navigate('methodology')} className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2 border-b border-border/30">
+                  Methodology
+                </button>
+                <button className="text-left text-sm font-medium text-foreground hover:text-primary transition-colors py-2 border-b border-border/30">
+                  About
+                </button>
+                <Button size="sm" className="mt-4 w-full">
+                  Partner With Us
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
 
