@@ -52,13 +52,13 @@ const Index: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-3 cursor-pointer" onClick={() => navigate('home')}>
             <Globe2 className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
             <div>
-              <div className="text-foreground font-semibold text-xs sm:text-sm tracking-wide">AI Sector Intelligence Atlas</div>
+              <div className="text-foreground font-semibold text-xs sm:text-sm tracking-wide">​AIxWorld</div>
               
             </div>
           </div>
 
           {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden gap-6 md:flex items-start justify-center">
             <button onClick={() => scrollToSection('sectors')} className="text-xs transition-colors uppercase tracking-widest text-accent-foreground hover:text-primary">
               Sectors
             </button>
