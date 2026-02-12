@@ -46,11 +46,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick }) => {
         map((item, i) =>
         <motion.div key={i} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, delay: 0.7 + i * 0.1 }}>
             <Card className="p-5 bg-card/60 backdrop-blur-md border-border/50 hover:border-border transition-colors">
-              <div className="text-2xl md:text-3xl font-bold text-foreground mb-1">
+              <div className="text-2xl md:text-3xl font-bold mb-1 text-accent-foreground">
                 <AnimatedCounter value={item.value} />
                 {item.suffix && <span className="text-muted-foreground text-lg">{item.suffix}</span>}
               </div>
-              <div className="text-[10px] text-muted-foreground uppercase tracking-widest">{item.label}</div>
+              <div className="text-muted-foreground uppercase tracking-widest text-[sidebar-primary-foreground] border-primary">{item.label}</div>
             </Card>
           </motion.div>
         )}
@@ -61,12 +61,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onSectorClick }) => {
         <InteractiveGlobe onSectorClick={onSectorClick} />
       </motion.div>
 
-      <motion.p
-        initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
-        className="text-xs text-muted-foreground/60 mt-4">
+      
 
-        Last updated: {new Date().toLocaleDateString()} {new Date().toLocaleTimeString()} • Data refreshed every 24 hours
-      </motion.p>
+
+
+
+
     </header>);
 
 };
